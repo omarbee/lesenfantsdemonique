@@ -7,8 +7,9 @@ var contentSchema = new Schema ({
         unique: true
     },
     _idUser:{
-        type: Number,
-        required: true,
+         type: Schema.Types.ObjectId, 
+         ref: 'User',
+         required:true 
         
     },
 
@@ -34,4 +35,4 @@ var contentSchema = new Schema ({
     },
 });
 
-module.exports = mongoose.model( 'content', contentSchema );
+module.exports = mongoose.model( 'contents', contentSchema );

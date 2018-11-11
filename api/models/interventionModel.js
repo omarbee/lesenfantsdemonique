@@ -7,8 +7,9 @@ var interventionSchema = new Schema ({
         unique: true
     },
     _idUser:{
-        type: Number,
-        required: true,
+         type: Schema.Types.ObjectId, 
+         ref: 'User',
+         required:true   
         
     },
 
@@ -27,4 +28,4 @@ var interventionSchema = new Schema ({
     
 });
 
-module.exports = mongoose.model( 'intervention', interventionSchema );
+module.exports = mongoose.model( 'interventions', interventionSchema );

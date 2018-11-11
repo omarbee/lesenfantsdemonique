@@ -7,8 +7,9 @@ var donationSchema = new Schema ({
         unique: true
     },
     _idUser:{
-        type: Number,
-        required: true,
+         type: Schema.Types.ObjectId, 
+         ref: 'User',
+         required:true 
         
     },
 
@@ -27,4 +28,4 @@ var donationSchema = new Schema ({
     
 });
 
-module.exports = mongoose.model( 'donation', donationSchema );
+module.exports = mongoose.model( 'donations', donationSchema );
