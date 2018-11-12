@@ -1,38 +1,34 @@
-const mongoose = require( 'mongoose' );
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var contentSchema = new Schema ({
-    _idContent:{
-        type: Number,
-        unique: true
+var contentSchema = new Schema({
+    _idContent: {
+        type: Schema.Types.ObjectId,
     },
-    _idUser:{
-         type: Schema.Types.ObjectId, 
-         ref: 'User',
-         required:true 
-        
+    _idUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
-
-    title:{
+    title: {
         type: String,
         required: true,
     },
-    date:{
+    date: {
         type: Date,
         
     },
-    type:{
+    type: {
         type: Number,
-        required: true
+        required: true,
     },
-    text:{
+    text: {
         type: text,
-        required: true
+        required: true,
     },
-    image:{
+    image: {
         type: String,
-        
     },
 });
 
-module.exports = mongoose.model( 'contents', contentSchema );
+module.exports = mongoose.model('contents', contentSchema);

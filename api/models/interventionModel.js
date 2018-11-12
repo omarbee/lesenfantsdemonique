@@ -1,31 +1,27 @@
-const mongoose = require( 'mongoose' );
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var interventionSchema = new Schema ({
-    _idIntervention:{
-        type: Number,
-        unique: true
+var interventionSchema = new Schema({
+    _idIntervention: {
+        type: Schema.Types.ObjectId,
     },
-    _idUser:{
-         type: Schema.Types.ObjectId, 
-         ref: 'User',
-         required:true   
-        
+    _idUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
-
-     amount:{
+    amount: {
         type: Number,
         required: true,
     },
-    date:{
+    date: {
         type: Date,
-        required: true
+        required: true,
     },
-    type:{
+    type: {
         type: Number,
-        required: true
+        required: true,
     },
-    
 });
 
-module.exports = mongoose.model( 'interventions', interventionSchema );
+module.exports = mongoose.model('interventions', interventionSchema);
