@@ -1,24 +1,23 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const mongoose = require('mongoose');
+const tokenChecker = require('./functions/tokenChecker');
+const url = require('url');
+const config = require('./configs/config');
 
-//Set up default mongoose connection
-var mongoDB = 'mongodb://127.0.0.1/lem';
+const mongoDB = 'mongodb://127.0.0.1/lem';
 mongoose.connect(mongoDB);
-// Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise;
-//Get the default connection
-var db = mongoose.connection;
-
-//Bind connection to error event (to get notification of connection errors)
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -26,7 +25,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('*', function(req, res, next) {
+    if (url.parse(req.originalUrl).path == '/login') {
+        next();
+    } else {
+        tokenChecker(req, res, next);
+    }
+});
+
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 app.use('/user', usersRouter);
 
 module.exports = app;
