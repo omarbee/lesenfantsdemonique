@@ -1,4 +1,3 @@
 {
-    "database": "lem",
-    "host": "127.0.0.1"
+    "connectionString": "mongodb://127.0.0.1/lem"
 }

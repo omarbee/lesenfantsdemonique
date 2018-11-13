@@ -6,8 +6,9 @@ const mongoose = require('mongoose');
 const tokenChecker = require('./functions/tokenChecker');
 const url = require('url');
 const config = require('./configs/config');
+const configDB = require('./configs/dbConfig');
 
-const mongoDB = 'mongodb://127.0.0.1/lem';
+const mongoDB = configDB.connectionString;
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
