@@ -23,7 +23,7 @@ var contentSchema = new Schema({
         required: true,
     },
     text: {
-        type: text,
+        type: String,
         required: true,
     },
     image: {
