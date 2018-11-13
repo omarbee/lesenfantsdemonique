@@ -28,7 +28,7 @@ exports.addUSer = function(req, res, next) {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         password: password,
-        type: type,
+        type: req.body.type,
         street: req.body.street,
         streetNumber: req.body.streetNumber,
         postalcode: req.body.postalcode,
