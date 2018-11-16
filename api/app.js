@@ -5,7 +5,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const tokenChecker = require('./functions/tokenChecker');
 const url = require('url');
-const config = require('./configs/config');
+const swaggerUi = require('express-swaggerize-ui');
 const configDB = require('./configs/dbConfig');
 
 const mongoDB = configDB.connectionString;
@@ -18,6 +18,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const contentsRouter = require('./routes/contents');
+const donationRouter = require('./routes/donation');
 
 const app = express();
 
@@ -27,16 +28,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const publicRoutes = ['/', '/login', '/api-docs/', '/api-docs.json'];
+
 app.use('*', function(req, res, next) {
-    if (url.parse(req.originalUrl).path == '/login') {
+    console.log(url.parse(req.originalUrl).path);
+    if (publicRoutes.includes(url.parse(req.originalUrl).path)) {
         next();
     } else {
         tokenChecker(req, res, next);
     }
 });
 
-app.use('/', indexRouter);
+app.use('/',indexRouter);
+app.use('/api-docs', swaggerUi());
+app.use('/api-docs.json', function(req, res) {
+    res.json(require('./swagger.json'));
+});
 app.use('/login', loginRouter);
 app.use('/user', usersRouter);
 app.use('/content', contentsRouter);
+app.use('/donation', donationRouter);
 module.exports = app;

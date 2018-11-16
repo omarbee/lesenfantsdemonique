@@ -7,7 +7,7 @@ var donationSchema = new Schema({
     },
     _idUser: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'users',
         required: true,
     },
     amount: {
@@ -16,7 +16,7 @@ var donationSchema = new Schema({
     },
     date: {
         type: Date,
-        required: true,
+        default: Date.now
     },
     type: {
         type: Number,

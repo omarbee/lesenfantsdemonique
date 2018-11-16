@@ -32,7 +32,6 @@ var userSchema = new Schema({
     postalcode: {
         type: String,
     },
-
     country: {
         type: String,
     },
