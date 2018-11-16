@@ -19,6 +19,7 @@ const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const contentsRouter = require('./routes/contents');
 const donationRouter = require('./routes/donation');
+const interventionsRouter = require('./routes/interventions');
 
 const app = express();
 
@@ -48,4 +49,5 @@ app.use('/login', loginRouter);
 app.use('/user', usersRouter);
 app.use('/content', contentsRouter);
 app.use('/donation', donationRouter);
+app.use('/intervention', interventionsRouter);
 module.exports = app;

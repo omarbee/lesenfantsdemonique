@@ -39,11 +39,20 @@ exports.addContent = function(req, res, next) {
 };
 
 exports.modifyContent = function(req, res, next) {
-    if (!req.body.title) return sendError(res, 'title is required');
-    if (!req.body.text) return sendError(res, 'text is required');
-    if (!req.body.type) return sendError(res, 'type is required');
-
     
+    const updateContent = contentModel({
+        title: req.body.title,
+        text: req.body.text,
+        image:req.body.image,
+        type: req.body.type,
+        date: req.body.date,
+    });
+
+    contentModel.findByIdAndUpdate(req.params.idcontent, {$set:updateContent},function(err, content){
+        if(err) return sendError(res, err);
+        if(content === null) return sendError(res, 'Content not found', 404);
+        res.send(content)
+    });
 };
 
 exports.deleteContent = function(req, res, next) {
