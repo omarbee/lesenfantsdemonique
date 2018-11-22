@@ -45,12 +45,28 @@ exports.addUSer = function(req, res, next) {
 };
 
 exports.modifyUser = function(req, res, next) {
-    if (!req.body.firstname) return sendError(res, 'firstname is required');
-    if (!req.body.lastname) return sendError(res, 'lastname is required');
-    if (!req.body.password) return sendError(res, 'password is required');
-    if (!req.body.type) return sendError(res, 'type is required');
+    
+    const updateUser = {
+        email: req.body.email,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        password: password,
+        type: req.body.type,
+        street: req.body.street,
+        streetNumber: req.body.streetNumber,
+        postalcode: req.body.postalcode,
+        country: req.body.country,
+        city: req.body.city,
+        phoneNumber: req.body.phoneNumber,
+        date: req.body.date,
+    };
 
-    //TODO MODIFY USER
+    userModel.findByIdAndUpdate(req.params.iduser, {$set:{userModel: updateUser},function(err, user){
+        if(err) return sendError(res, err);
+        if(user === null) return sendError(res, 'User not found', 404);
+        res.send(user)
+    }});
+
 };
 
 exports.deleteUser = function(req, res, next) {

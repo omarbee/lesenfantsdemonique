@@ -44,6 +44,21 @@ var userSchema = new Schema({
     date: {
         type: Date,
     },
+    job: {
+        type: String,
+    },
+    pregnancy: {
+        type: String,
+    },
+    maritalStatus: {
+        type: String,
+    },
+    Children: {
+        type: Number,
+    },
+    
+    
+    
 });
 
 module.exports = mongoose.model('users', userSchema);

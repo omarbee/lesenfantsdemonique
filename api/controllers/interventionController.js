@@ -1,5 +1,5 @@
 const interventionModel = require('../models/interventionModel');
-const { sendError}= require('../functions/sendFunctions');
+const { sendError}= require('../functions/sendFunction');
 
 exports.getIntervention = function(req, res, next) {
     let param = {};
@@ -14,7 +14,7 @@ exports.getIntervention = function(req, res, next) {
     });
 };
 
-exports.addInterventions = function(req, res, next) {
+exports.addIntervention = function(req, res, next) {
     if(!req.body.amount) return sendError(res, 'Amount is required');
     if(!req.body.date) return sendError(res, 'Date is required');
     if(!req.body.type) return sendError(res, 'Type is required');
@@ -33,17 +33,17 @@ exports.addInterventions = function(req, res, next) {
 
 exports.modifyIntervention = function(req, res, next) {
 
-    const updateIntervention = interventionModel({
+    const updateIntervention = {
         amount: req.body.amount,
         date: req.body.date,
         type: req.body.type,
-    });
+    };
 
-    interventionModel.findByIdAndUpdate(req.params.idintervention, {$set:updateIntervention}, function(err, intervention){
+    interventionModel.findByIdAndUpdate(req.params.idintervention, {$set:{interventionModel:updateIntervention}, function(err, intervention){
         if(err) return sendError(res, err);
         if(intervention === null) return sendError(res, 'Intervention not found', 404);
         res.send(intervention)
-    });
+    }});
 };
 
 exports.deleteIntervention = function(req, res, next) {

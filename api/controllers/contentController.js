@@ -16,6 +16,7 @@ exports.getContent = function(req, res, next) {
 };
 
 exports.addContent = function(req, res, next) {
+    if (!req.body._idUser) return sendError(res, '_idUser is required');
     if (!req.body.title) return sendError(res, 'title is required');
     if (!req.body.text) return sendError(res, 'text is required');
     if (!req.body.type) return sendError(res, 'type is required');
@@ -23,6 +24,7 @@ exports.addContent = function(req, res, next) {
     
 
     const newContent = contentModel({
+        _idUser: req.body._idUser,
         title: req.body.title,
         text: req.body.text,
         image:req.body.image,
@@ -40,24 +42,27 @@ exports.addContent = function(req, res, next) {
 
 exports.modifyContent = function(req, res, next) {
     
-    const updateContent = contentModel({
+    const updateContent = {
         title: req.body.title,
         text: req.body.text,
         image:req.body.image,
         type: req.body.type,
         date: req.body.date,
-    });
+    };
 
-    contentModel.findByIdAndUpdate(req.params.idcontent, {$set:updateContent},function(err, content){
+    contentModel.findByIdAndUpdate(req.params.idcontent, {$set:{contentModel: updateContent},function(err, content){
         if(err) return sendError(res, err);
         if(content === null) return sendError(res, 'Content not found', 404);
         res.send(content)
-    });
+    }});
+
 };
+
 
 exports.deleteContent = function(req, res, next) {
     contentModel.findByIdAndRemove(req.params.idcontent, function(err, user) {
         if (err) return sendError(res, err);
         if (content === null) return sendError(res, 'Content not found', 404);
         res.send(content);
-    })};
+    });
+};
