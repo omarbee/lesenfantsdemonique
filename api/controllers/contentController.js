@@ -7,6 +7,9 @@ exports.getContent = function(req, res, next) {
     if (req.params.idcontent) {
         param = { _id: req.params.idcontent };
     }
+    if (req.params.iduser) {
+        param._idUser = req.params.iduser;
+    }
 
     contentModel.find(param, function(err, users) {
         if (err) return sendError(res, err);

@@ -50,4 +50,10 @@ app.use('/user', usersRouter);
 app.use('/content', contentsRouter);
 app.use('/donation', donationRouter);
 app.use('/intervention', interventionsRouter);
+
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client-lem'));
+  });
+
 module.exports = app;
