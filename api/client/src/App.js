@@ -4,12 +4,19 @@ import './App.css';
 import Register from './components/Register'
 import Login from './components/Login'
 
+const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmU5ODIwYjFlY2MzMzVhMWViNTkxYmYiLCJlbWFpbCI6ImxvaWNrNjlAZ21haWwuY29tIiwiaWF0IjoxNTQyMDMwMDk4fQ.lziNTy51UZ5-gey3Gu0M4J8rqN9KmyPdXzc-RMK46ZM";
+var myHeaders = new Headers();
+myHeaders.append("x-access-token", API_TOKEN);
+
 class App extends Component {
-  state = {users: [] }
+  constructor(props) {
+    super(props);
+    this.state = {users: []};
+  }
   componentWillMount(){
-    fetch('/user')
-    .then(res => res.user())
-    .then(users =>this.setState({ users }));
+    fetch('/user', {headers: myHeaders})
+    .then(response => response.json())
+    .then(users => this.setState({ users }));
   }
   render() {
     return (
@@ -17,7 +24,7 @@ class App extends Component {
         <h1>Users</h1>
           <ul>
             {this.state.users.map(user =>
-              <li key={user.id}>{user.username}</li>
+              <li key={user._id}>{user.firstname} {user.lastname}</li>
             )}
 
             
