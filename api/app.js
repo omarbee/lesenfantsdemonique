@@ -7,6 +7,7 @@ const tokenChecker = require('./functions/tokenChecker');
 const url = require('url');
 const swaggerUi = require('express-swaggerize-ui');
 const configDB = require('./configs/dbConfig');
+const cors = require('cors');
 
 const mongoDB = configDB.connectionString;
 mongoose.connect(mongoDB);
@@ -23,6 +24,7 @@ const interventionsRouter = require('./routes/interventions');
 
 const app = express();
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

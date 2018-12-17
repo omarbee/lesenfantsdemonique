@@ -50,7 +50,7 @@ exports.modifyUser = function(req, res, next) {
         email: req.body.email,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        password: password,
+        password: req.body.password,
         type: req.body.type,
         street: req.body.street,
         streetNumber: req.body.streetNumber,
@@ -61,11 +61,11 @@ exports.modifyUser = function(req, res, next) {
         date: req.body.date,
     };
 
-    userModel.findByIdAndUpdate(req.params.iduser, {$set:{userModel: updateUser},function(err, user){
+    userModel.findByIdAndUpdate(req.params.iduser,updateUser,{new: true},function(err, user){
         if(err) return sendError(res, err);
         if(user === null) return sendError(res, 'User not found', 404);
         res.send(user)
-    }});
+    });
 
 };
 
