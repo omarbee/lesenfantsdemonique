@@ -12,7 +12,6 @@ exports.authentificate = function(req, res, next) {
     if (!password) return sendError(res, 'password missing');
 
     userModel.find({ email: email }, function(err, users) {
-        console.log(users);
         if (!users[0]) return sendError(res, 'wrong password or email');
         bcrypt.compare(password, users[0].password, function(err, results) {
             if (err) return sendError(res, err);
@@ -21,7 +20,14 @@ exports.authentificate = function(req, res, next) {
                 _id: users[0]._id
             };
             const token = jwt.sign(tokenDetail, config.secret);
-            res.status(200).send({ token: token });
+            const user = {
+                _id: users[0]._id,
+                firstname: users[0].firstname,
+                lastname: users[0].lastname,
+                type: users[0].lastname,
+                email: users[0].email
+            }
+            res.status(200).send({ token: token, user: user });
         });
     });
 };
