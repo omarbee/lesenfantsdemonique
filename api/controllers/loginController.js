@@ -24,7 +24,7 @@ exports.authentificate = function(req, res, next) {
                 _id: users[0]._id,
                 firstname: users[0].firstname,
                 lastname: users[0].lastname,
-                type: users[0].lastname,
+                type: users[0].type,
                 email: users[0].email
             }
             res.status(200).send({ token: token, user: user });
